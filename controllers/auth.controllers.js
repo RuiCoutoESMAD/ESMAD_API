@@ -158,3 +158,15 @@ exports.isServiceProvider = async (req, res, next) => {
     }
     next();
 };
+
+//verificar se é service provider ou admin
+exports.isSpOrAdmin = async (req, res, next) => {
+    let user = await User.findByPk(req.loggedUserId);
+    let role = await user.getRole();
+    req.loggedUserRole = role.type;
+    //console.log('role', role.type);
+    if (role.type !== 'service provider' && role.type !== 'admin') {
+        return res.status(403).send({ message: "You must be authenticated as service provider to perform this request!" })
+    }
+    next();
+};

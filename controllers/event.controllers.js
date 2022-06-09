@@ -39,3 +39,22 @@ exports.getAllEvents = async (req, res) => {
         res.status(500).json({ error: 'Something went wrong. Please try again later.' });
     }
 }
+
+// delete event
+exports.deleteEvent = async (req, res) => {
+    try {
+        Event.destroy({
+            where: {
+                id: req.params.eventId
+            }
+        }).then((result) => {
+            res.status(200).json({
+                message: "Event deleted!"
+            })
+        }).catch((error) => {
+            res.status(400).send(error);
+        })
+    } catch (error) {
+        res.status(500).json({ error: 'Something went wrong. Please try again later.' });
+    }
+}
