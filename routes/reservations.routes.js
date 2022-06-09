@@ -1,4 +1,3 @@
-//mandar novo para rui
 const express = require('express');
 const authController = require("../controllers/auth.controllers.js");
 const reservationsController = require("../controllers/reservation.controllers.js");

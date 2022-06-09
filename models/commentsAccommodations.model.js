@@ -1,4 +1,3 @@
-//mandar novo para rui
 module.exports = (sequelize, DataTypes) => {
     const CommentAccommodation = sequelize.define("commentAccommodation", {
         comment: {
