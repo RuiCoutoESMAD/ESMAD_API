@@ -58,3 +58,26 @@ exports.deleteEvent = async (req, res) => {
         res.status(500).json({ error: 'Something went wrong. Please try again later.' });
     }
 }
+
+// update event
+exports.editEvent = (req, res) => {
+    try {
+        Event.update({
+            adress: req.body.adress,
+            date: req.body.date,
+            price: req.body.price,
+        },{
+            where: {
+                id: req.params.eventId
+            }
+        }).then((result) => {
+            res.status(200).json({
+                message: "event updated!"
+            });
+        }).catch((error) => {
+            res.status(400).send(error)
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Something went wrong. Please try again later.' });
+    }
+}

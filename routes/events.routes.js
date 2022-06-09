@@ -13,7 +13,8 @@ router.route('/')
     .post(authController.verifyToken, authController.isServiceProvider, eventController.createEvent)
 
 router.route('/:eventId')
-    .delete(authController.verifyToken, authController.isSpOrAdmin, eventController.deleteEvent)    
+    .delete(authController.verifyToken, authController.isSpOrAdmin, eventController.deleteEvent)
+    .put(authController.verifyToken, authController.isServiceProvider, eventController.editEvent)    
 
 router.all('*', function (req, res) {
     res.status(404).json({ message: 'EVENTS: what????' });
