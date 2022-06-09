@@ -2,6 +2,7 @@ const db = require('../models/db.js');
 const Accommodation = db.accommodation;
 const Event = db.event;
 const ReservationAccommodation = db.reservationAccommodation;
+const ReservationEvent = db.reservationEvent;
 const User = db.users;
 const CommentReservation = db.commentAccommodation;
 
@@ -79,7 +80,7 @@ exports.getAllReservationsForAccommodation = async (req, res) => {
         if (reservations.length === 0) {
             return res.status(404).json({ error: "There are no reservations registered"})
         }
-        return res.status(200).json(events);
+        return res.status(200).json(reservations);
     } catch (err) {
         res.status(500).json({ error: 'Something went wrong. Please try again later.' });
     }
@@ -114,4 +115,19 @@ exports.createReservationEvent = async (req, res) => {
         return res.status(500).json({ error: "Something went wrong. Please try again later." });
     }
 
+}
+
+//get reservations for event
+exports.getAllReservationsForEvent = async (req, res) => {
+    try {
+        let reservations = await ReservationEvent.findAll({where: {
+            id: req.params.eventID
+        }});
+        if (reservations.length === 0) {
+            return res.status(404).json({ error: "There are no reservations registered"})
+        }
+        return res.status(200).json(reservations);
+    } catch (err) {
+        res.status(500).json({ error: 'Something went wrong. Please try again later.' });
+    }
 }
