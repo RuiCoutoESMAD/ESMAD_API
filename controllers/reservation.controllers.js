@@ -1,6 +1,6 @@
-//mandar novo para rui
 const db = require('../models/db.js');
 const Accommodation = db.accommodation;
+const Event = db.event;
 const ReservationAccommodation = db.reservationAccommodation;
 const User = db.users;
 const CommentReservation = db.commentAccommodation;
@@ -63,6 +63,37 @@ exports.validateReservationAccommodation = async (req, res) => {
         const validateReservation = await ReservationAccommodation.update(req.body, { where: { id: req.params.reservationID } });
         if (validateReservation == 1) {
             return res.status(200).json({ message: "Validation accepted" });
+        }
+    } catch (err) {
+        return res.status(500).json({ error: "Something went wrong. Please try again later." });
+    }
+
+}
+
+//criar reserva para event
+exports.createReservationEvent = async (req, res) => {
+    try {
+        //verificar se o event existe
+        const event = await Event.findByPk(req.params.eventID);
+        if (!event) {
+            return res.status(404).json({ error: "Event not found." });
+        }
+
+        //verificar se o user já tem reserva para aquele event
+        const reservation = await ReservationEvent.findOne({ where: { userId: req.loggedUserId, eventId: req.params.eventID } });
+        if (reservation) {
+            return res.status(400).json({ error: "You Already reserved this event." });
+        }
+
+        //criar a reserva
+        const reservationEvent = await ReservationEvent.create({
+            validation: false,
+            userId: req.loggedUserId,
+            eventId: req.params.eventID
+        });
+
+        if (reservationEvent) {
+            return res.status(200).json({ message: "Reservation created." });
         }
     } catch (err) {
         return res.status(500).json({ error: "Something went wrong. Please try again later." });
