@@ -21,6 +21,12 @@ router.route('/events/:eventID')
     .post(authController.verifyToken, authController.isUser, reservationsController.createReservationEvent)
     .get(authController.verifyToken, authController.isServiceProvider, reservationsController.getAllReservationsForEvent)
 
+router.route('/reservation/accommodation/:reservationID')
+    .get(authController.verifyToken, authController.isServiceProvider, reservationsController.getReservationForAccommodation)
+
+router.route('/reservation/event/:reservationID')
+    .get(authController.verifyToken, authController.isServiceProvider, reservationsController.getReservationForEvent)
+
 router.all('*', function (req, res) {
     res.status(404).json({ message: 'RESERVATIONS: what????' });
 

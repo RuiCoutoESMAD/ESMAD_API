@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const ReservationAccommodation = sequelize.define("reservationAccommodation", {
+    const ReservationEvent = sequelize.define("reservationEvent", {
         validation: {
             type: DataTypes.BOOLEAN
         },
@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {
         timestamps: false,
-        tableName: 'reservationsAccommodations'
+        tableName: 'reservationsEvents'
     });
-    return ReservationAccommodation;
+    return ReservationEvents;
 };

@@ -75,12 +75,27 @@ exports.validateReservationAccommodation = async (req, res) => {
 exports.getAllReservationsForAccommodation = async (req, res) => {
     try {
         let reservations = await ReservationAccommodation.findAll({where: {
-            id: req.params.accommodationID
+            accommodationId: req.params.accommodationID
         }});
         if (reservations.length === 0) {
             return res.status(404).json({ error: "There are no reservations registered"})
         }
         return res.status(200).json(reservations);
+    } catch (err) {
+        res.status(500).json({ error: 'Something went wrong. Please try again later.' });
+    }
+}
+
+//get 1 reservation for accommodation
+exports.getReservationForAccommodation = async (req, res) => {
+    try {
+        let reservation = await ReservationAccommodation.findOne({where: {
+            id: req.params.reservationID,
+        }});
+        if (reservation.length === 0) {
+            return res.status(404).json({ error: "There are no reservation registered"})
+        }
+        return res.status(200).json(reservation);
     } catch (err) {
         res.status(500).json({ error: 'Something went wrong. Please try again later.' });
     }
@@ -121,12 +136,27 @@ exports.createReservationEvent = async (req, res) => {
 exports.getAllReservationsForEvent = async (req, res) => {
     try {
         let reservations = await ReservationEvent.findAll({where: {
-            id: req.params.eventID
+            eventId: req.params.eventID
         }});
         if (reservations.length === 0) {
             return res.status(404).json({ error: "There are no reservations registered"})
         }
         return res.status(200).json(reservations);
+    } catch (err) {
+        res.status(500).json({ error: 'Something went wrong. Please try again later.' });
+    }
+}
+
+//get 1 reservation for event
+exports.getReservationForEvent = async (req, res) => {
+    try {
+        let reservation = await ReservationEvent.findOne({where: {
+            id: req.params.reservationID,
+        }});
+        if (reservation.length === 0) {
+            return res.status(404).json({ error: "There are no reservation registered"})
+        }
+        return res.status(200).json(reservation);
     } catch (err) {
         res.status(500).json({ error: 'Something went wrong. Please try again later.' });
     }
