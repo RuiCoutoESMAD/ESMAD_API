@@ -15,7 +15,7 @@ router.route('/')
 
 router.route('/:accommodationID')
     .delete(authController.verifyToken, authController.isServiceProvider, accommodationController.deleteAccommodation)
-    .put(authController.verifyToken, authController.isServiceProvider, eventController.editAccommodation) 
+    .put(authController.verifyToken, authController.isServiceProvider, accommodationController.editAccommodation) 
 
 router.all('*', function (req, res) {
     res.status(404).json({ message: 'ACCOMMODATIONS: what????' });
