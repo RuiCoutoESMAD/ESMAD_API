@@ -29,6 +29,8 @@ db.status = require('./status.model.js')(sequelize, DataTypes);
 db.users = require('./users.model.js')(sequelize, DataTypes);
 db.roomType = require('./roomType.model.js')(sequelize, DataTypes);
 db.accommodation = require('./accommodation.model.js')(sequelize, DataTypes);
+db.event = require('./event.model.js')(sequelize, DataTypes);
+db.eventType = require('./eventType.model.js')(sequelize, DataTypes);
 
 //relação entre user e role
 db.roles.hasMany(db.users);
@@ -46,5 +48,12 @@ db.accommodation.belongsTo(db.users);
 db.roomType.hasMany(db.accommodation);
 db.accommodation.belongsTo(db.roomType);
 
+//relação entre user e event
+db.users.hasMany(db.event);
+db.event.belongsTo(db.users);
+
+//relação entre eventType e event
+db.eventType.hasMany(db.event);
+db.event.belongsTo(db.eventType);
 
 module.exports = db;
