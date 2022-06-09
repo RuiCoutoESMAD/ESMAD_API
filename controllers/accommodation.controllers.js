@@ -73,5 +73,30 @@ exports.deleteAccommodation = async (req, res) => {
     } catch (err) {
         return res.status(500).json({ error: "Something went wrong. Please try again later." });
     }
+}
 
+// update accommodation
+exports.editAccommodation = (req, res) => {
+    try {
+        Accommodation.update({
+            zone: req.body.zone,
+            address: req.body.address,
+            temp_available: req.body.temp_available,
+            price_range: req.body.price_range,
+            nBeds: req.body.nBeds,
+            nPeople: req.body.nPeople,
+        },{
+            where: {
+                id: req.params.accommodationId
+            }
+        }).then((result) => {
+            res.status(200).json({
+                message: "accommodation updated!"
+            });
+        }).catch((error) => {
+            res.status(400).send(error)
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Something went wrong. Please try again later.' });
+    }
 }
