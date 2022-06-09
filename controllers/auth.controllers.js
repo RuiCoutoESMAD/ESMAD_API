@@ -170,3 +170,13 @@ exports.isSpOrAdmin = async (req, res, next) => {
     }
     next();
 };
+
+exports.isUser = async (req, res, next) => {
+    let user = await User.findByPk(req.loggedUserId);
+    let role = await user.getRole();
+    req.loggedUserRole = role.type;
+    if (role.type !== "customer") {
+        return res.status(403).send({ message: "You must be authenticated as a customer to perform this request!"})
+    }
+    next();
+}

@@ -30,3 +30,48 @@ exports.createAccommodation = async (req, res) => {
         res.status(500).json({ error: 'Something went wrong. Please try again later.' });
     }
 }
+
+exports.getAllAccommodations = async (req, res) => {
+    try {
+        //obter todas as accommodations
+        const accommodations = await Accommodation.findAll();
+
+        //validar se existe alguma accommodation
+        if (accommodations) {
+            return res.status(200).json(accommodations);
+        } else {
+            return res.status(404).json({ error: "No Accommodations available." });
+        }
+    } catch (err) {
+        return res.status(500).json({ error: "Something went wrong. Please try again later." });
+    }
+}
+
+//remover uma accommodation
+exports.deleteAccommodation = async (req, res) => {
+    try {
+        //procurar o id da accommodation a remover
+        const accommodation = await Accommodation.findByPk(req.params.accommodationID);
+
+        //validar se existe a accommodation a remover
+        if (!accommodation) {
+            return res.status(404).json({ error: "Accommodation not found." });
+        }
+
+        //validar se o service provider logado é o owner da accommodation
+        if (req.loggedUserId !== accommodation.userId) {
+            return res.status(401).json({ error: "You must be the owner of the accommodation to remove it." });
+        }
+
+        //remover a accommodation
+        const deleteAccommodation = await Accommodation.destroy({ where: { id: req.params.accommodationID } });
+
+        //validar se removeu
+        if (deleteAccommodation === 1) {
+            return res.status(200).json({ message: "Accommodation deleted." });
+        }
+    } catch (err) {
+        return res.status(500).json({ error: "Something went wrong. Please try again later." });
+    }
+
+}

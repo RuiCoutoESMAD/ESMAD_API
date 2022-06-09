@@ -11,6 +11,10 @@ router.use((req, res, next) => {
 
 router.route('/')
     .post(authController.verifyToken, authController.isServiceProvider, accommodationController.createAccommodation)
+    .get(accommodationController.getAllAccommodations)
+
+router.route('/:accommodationID')
+    .delete(authController.verifyToken, authController.isServiceProvider, accommodationController.deleteAccommodation)
 
 router.all('*', function (req, res) {
     res.status(404).json({ message: 'ACCOMMODATIONS: what????' });

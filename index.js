@@ -7,6 +7,7 @@ const port = process.env.PORT;
 const auth = require('./routes/auth.routes.js');
 const users = require('./routes/user.routes.js');
 const accommodations = require('./routes/accommodations.routes.js');
+const reservations = require('./routes/reservations.routes.js');
 
 //enable parsing JSON body data
 app.use(express.json());
@@ -20,6 +21,7 @@ app.get('/', function (req, res) {
 app.use('/auth', auth)
 app.use('/users', users)
 app.use('/accommodations', accommodations)
+app.use('/reservations', reservations)
 
 // handle invalid routes
 app.get('*', function (req, res) {
