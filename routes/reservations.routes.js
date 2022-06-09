@@ -12,6 +12,7 @@ router.use((req, res, next) => {
 
 router.route('/accommodations/:accommodationID')
     .post(authController.verifyToken, authController.isUser, reservationsController.createReservationAccommodation)
+    .get(authController.verifyToken, authController.isServiceProvider, reservationsController.getAllReservationsForAccommodation)
 
 router.route('/:reservationID/accommodations/:accommodationID')
     .patch(authController.verifyToken, authController.isServiceProvider, reservationsController.validateReservationAccommodation)

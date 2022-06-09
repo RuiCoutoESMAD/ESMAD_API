@@ -70,6 +70,21 @@ exports.validateReservationAccommodation = async (req, res) => {
 
 }
 
+//get reservations for accommodation
+exports.getAllReservationsForAccommodation = async (req, res) => {
+    try {
+        let reservations = await ReservationAccommodation.findAll({where: {
+            id: req.params.accommodationID
+        }});
+        if (reservations.length === 0) {
+            return res.status(404).json({ error: "There are no reservations registered"})
+        }
+        return res.status(200).json(events);
+    } catch (err) {
+        res.status(500).json({ error: 'Something went wrong. Please try again later.' });
+    }
+}
+
 //criar reserva para event
 exports.createReservationEvent = async (req, res) => {
     try {
