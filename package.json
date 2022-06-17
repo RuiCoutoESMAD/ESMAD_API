@@ -1,0 +1,31 @@
+{
+    "name": "esmad_api",
+    "version": "1.0.0",
+    "description": "REST API for academical association",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/RuiCoutoESMAD/ESMAD_API.git"
+    },
+    "author": "Rui Couto",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/RuiCoutoESMAD/ESMAD_API/issues"
+    },
+    "homepage": "https://github.com/RuiCoutoESMAD/ESMAD_API#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "jsonwebtoken": "^8.5.1",
+        "mysql2": "^2.3.3",
+        "sequelize": "^6.20.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.16"
+    }
+}
