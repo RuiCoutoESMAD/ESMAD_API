@@ -32,5 +32,5 @@ app.get('*', function (req, res) {
 
 // start listening to client requests
 app.listen(port, function() {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Connected`);
 })
