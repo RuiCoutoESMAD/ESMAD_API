@@ -1,6 +1,8 @@
 const express = require('express');
 const authController = require("../controllers/auth.controllers.js");
 const reservationsController = require("../controllers/reservation.controllers.js");
+const commentsAccommodationsController = require('../controllers/commentsAccommodations.controller.js');
+const commentsEventsController = require('../controllers/commentsEvents.controllers.js');
 
 let router = express.Router();
 
@@ -15,10 +17,22 @@ router.route('/accommodations/:accommodationID')
 
 router.route('/:reservationID/accommodations/:accommodationID')
     .patch(authController.verifyToken, authController.isServiceProvider, reservationsController.validateReservationAccommodation)
+    .post(authController.verifyToken, authController.isUser, commentsAccommodationsController.createComment)
+    .get(authController.verifyToken, authController.isSpOrAdmin, commentsAccommodationsController.getCommentsReservationAccommodation)
+
+router.route('/:reservationID/accommodations/:accommodationID/comments/:commentID')
+    .delete(authController.verifyToken, authController.isUser, commentsAccommodationsController.deleteCommentsReservationAccommodation)
+
+router.route('/:reservationID/events/:eventsID/comments/:commentID')
+    .delete(authController.verifyToken, authController.isUser, commentsEventsController.deleteEventComment)
 
 router.route('/events/:eventID')
     .post(authController.verifyToken, authController.isUser, reservationsController.createReservationEvent)
     .get(authController.verifyToken, authController.isServiceProvider, reservationsController.getAllReservationsForEvent)
+
+router.route('/:reservationID/events/:eventID')
+    .post(authController.verifyToken, authController.isUser, commentsEventsController.createComment)
+    .get(authController.verifyToken, authController.isSpOrAdmin, commentsEventsController.getEventsComments)
 
 router.route('/reservation/accommodation/:reservationID')
     .get(authController.verifyToken, authController.isServiceProvider, reservationsController.getReservationForAccommodation)

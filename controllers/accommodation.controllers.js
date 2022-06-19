@@ -23,7 +23,7 @@ exports.createAccommodation = async (req, res) => {
             userId: req.loggedUserId
         });
         if (accommodation) {
-            return res.status(200).json({ message: "Accommodation created"});
+            return res.status(200).json({ message: "Accommodation created" });
         }
     }
     catch (err) {
@@ -33,8 +33,47 @@ exports.createAccommodation = async (req, res) => {
 
 exports.getAllAccommodations = async (req, res) => {
     try {
+        //definir as query strings
+        let { zone, nPeople, roomType } = req.query;
+
+        //definir a condição
+        let condition = null;
+
+        if (zone) {
+            if (condition == null) {
+                condition = {
+                    zone: { [Op.like]: `%${zone}%` }
+                }
+            } else {
+                condition['zone'] = { [Op.like]: `%${zone}%` };
+            }
+        }
+
+        if (nPeople) {
+            if (condition == null) {
+                condition = {
+                    nPeople: { [Op.gte]: nPeople }
+                }
+            } else {
+                condition['nPeople'] =
+                    { [Op.gte]: nPeople };
+            }
+        }
+
+        if (roomType) {
+            if (condition == null) {
+                condition = {
+                    roomTypeId: roomType
+                }
+            } else {
+                condition["roomTypeId"] = roomType;
+            }
+    
+        }
+
+
         //obter todas as accommodations
-        const accommodations = await Accommodation.findAll();
+        const accommodations = await Accommodation.findAll({where: condition});
 
         //validar se existe alguma accommodation
         if (accommodations) {
@@ -85,7 +124,7 @@ exports.editAccommodation = (req, res) => {
             price_range: req.body.price_range,
             nBeds: req.body.nBeds,
             nPeople: req.body.nPeople,
-        },{
+        }, {
             where: {
                 id: req.params.accommodationId
             }

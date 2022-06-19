@@ -8,6 +8,7 @@ const auth = require('./routes/auth.routes.js');
 const users = require('./routes/user.routes.js');
 const accommodations = require('./routes/accommodations.routes.js');
 const reservations = require('./routes/reservations.routes.js');
+const events = require('./routes/events.routes.js');
 
 //enable parsing JSON body data
 app.use(express.json());
@@ -22,6 +23,7 @@ app.use('/auth', auth)
 app.use('/users', users)
 app.use('/accommodations', accommodations)
 app.use('/reservations', reservations)
+app.use('/events', events)
 
 // handle invalid routes
 app.get('*', function (req, res) {

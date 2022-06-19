@@ -118,7 +118,6 @@ exports.createReservationEvent = async (req, res) => {
 
         //criar a reserva
         const reservationEvent = await ReservationEvent.create({
-            validation: false,
             userId: req.loggedUserId,
             eventId: req.params.eventID
         });

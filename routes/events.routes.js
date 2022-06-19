@@ -11,6 +11,7 @@ router.use((req, res, next) => {
 
 router.route('/')
     .post(authController.verifyToken, authController.isServiceProvider, eventController.createEvent)
+    .get(eventController.getAllEvents)
 
 router.route('/:eventId')
     .delete(authController.verifyToken, authController.isSpOrAdmin, eventController.deleteEvent)

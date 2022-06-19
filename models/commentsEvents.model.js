@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const CommentAccommodation = sequelize.define("commentAccommodation", {
+    const CommentEvents = sequelize.define("commentEvent", {
         comment: {
             type: DataTypes.STRING
         },
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {
         timestamps: false,
-        tableName: 'commentsAccommodations'
+        tableName: 'commentsReservations'
     });
-    return CommentAccommodation;
+    return CommentEvents;
 };
